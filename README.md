@@ -21,7 +21,6 @@ var error = validateSwaggerModel(myCat, catModel);
 // error.toString():
 // ModelValidationError: "Cat" is invalid:
 //   PropertyValidationError: "age" is invalid: blue must be a number, not a string
-}
 ```
 
 ## Installation and Use
