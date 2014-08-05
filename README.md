@@ -1,6 +1,6 @@
 # Validate Swagger Objects
 
-Detailed validation service for [Swaggerobject](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects:
+Detailed validation service for [Swagger](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects:
 * [Models](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#527-model-object) (including inheritance)
 * [Operations](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#523-operation-object)
 * [Data types](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#433-data-type-fields)
