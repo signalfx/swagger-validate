@@ -120,40 +120,41 @@ ErrorsInArrayElementsError.prototype = Object.create(DataTypeValidationError.pro
 ErrorsInArrayElementsError.prototype.constructor = ErrorsInArrayElementsError;
 exports.ErrorsInArrayElementsError = ErrorsInArrayElementsError;
 
-function MissingPropertyError(){
-  this.name = 'MissingPropertyError';
+function MissingValueError(){
+  this.name = 'MissingValueError';
   
-  this.message = 'This property is required but missing';
+  this.message = 'This value is required but missing';
 }
-MissingPropertyError.prototype = Object.create(DataTypeValidationError.prototype);
-MissingPropertyError.prototype.constructor = MissingPropertyError;
-exports.MissingPropertyError = MissingPropertyError;
+MissingValueError.prototype = Object.create(DataTypeValidationError.prototype);
+MissingValueError.prototype.constructor = MissingValueError;
+exports.MissingValueError = MissingValueError;
 
-function PropertyValidationError(propertyName, property, error){
-  this.name = 'PropertyValidationError';
-  
-  this.message = '"' + propertyName + '" is invalid: ' + error.message;
-  this.propertyName = propertyName;
-  this.property = property;
-  this.innerError = error;
+function ValidationError(specName, spec, error){
+  this.name = 'ValidationError';
+  this.specName = specName;
+  this.spec = spec;
+  this.error = error;
+
+  this.message = specName + ' is invalid: ' + error.message;
 }
-PropertyValidationError.prototype = Object.create(DataTypeValidationError.prototype);
-PropertyValidationError.prototype.constructor = PropertyValidationError;
-exports.PropertyValidationError = PropertyValidationError;
+ValidationError.prototype = Object.create(DataTypeValidationError.prototype);
+ValidationError.prototype.constructor = ValidationError;
+exports.ValidationError = ValidationError;
 
-function ModelValidationError(value, model, propertyErrors){
-  this.name = 'ModelValidationError';
+function ValidationErrors(value, specName, spec, errors){
+  this.name = 'ValidationErrors';
 
-  this.model = model;
   this.value = value;
-  this.propertyErrors = propertyErrors || [];
+  this.specName = specName;
+  this.spec = spec;
+  this.errors = errors || [];
 
-  this.message = '"' + model.id + '" is invalid';
+  this.message = specName + ' is invalid';
 
-  if(this.propertyErrors.length){
-    this.message += '\n\t' + this.propertyErrors.join(',\n\t');
+  if(this.errors.length){
+    this.message += ':\n\t' + this.errors.map(function(e){ return e.message; }).join('\n\t');
   }
 }
-ModelValidationError.prototype = Object.create(DataTypeValidationError.prototype);
-ModelValidationError.prototype.constructor = ModelValidationError;
-exports.ModelValidationError = ModelValidationError;
+ValidationErrors.prototype = Object.create(DataTypeValidationError.prototype);
+ValidationErrors.prototype.constructor = ValidationErrors;
+exports.ValidationErrors = ValidationErrors;

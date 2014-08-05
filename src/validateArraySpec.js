@@ -2,17 +2,17 @@
 
 /* jshint -W053 */
 
-var validators = require('./validators'),
+var validateArray = require('./validateArray'),
   errorTypes = require('./errorTypes');
 
 describe('array validator', function(){
   it('exists', function(){
-    expect(validators.validateArray).toBeDefined();
+    expect(validateArray).toBeDefined();
   });
 
   it('doesn\'t throw errors for valid values', function(){
     function test(value, dataType){
-      var result = validators.validateArray(value, dataType);
+      var result = validateArray(value, dataType);
       expect(result).toBeUndefined();
     }
 
@@ -34,7 +34,7 @@ describe('array validator', function(){
 
   it('throws errors for invalid values', function(){
     function test(value, dataType, errorType){
-      var result = validators.validateArray(value, dataType);
+      var result = validateArray(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 

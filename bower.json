@@ -1,7 +1,7 @@
 {
-  "name": "validate-swagger-model",
+  "name": "swagger-validate",
   "version": "0.1.0",
-  "description": "Detailed validation of objects against a given swagger model",
+  "description": "Detailed validation of objects against a given swagger spec",
   "keywords": [
     "swagger",
     "api",
@@ -11,7 +11,7 @@
   "main": [
     "dist/validate-swagger-model.js"
   ],
-  "homepage": "https://github.com/signalfuse/validate-swagger-model",
+  "homepage": "https://github.com/signalfuse/swagger-validate",
   "authors": [
     "Ozan Turgut <ozanturgut@gmail.com>"
   ],
@@ -34,7 +34,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:signalfuse/validate-swagger-model.git"
+    "url": "git@github.com:signalfuse/swagger-validate.git"
   },
   "dependencies": {}
 }

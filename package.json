@@ -1,14 +1,14 @@
 {
-  "name": "validate-swagger-model",
+  "name": "swagger-validate",
   "version": "0.1.0",
-  "description": "Detailed validation of objects against a given swagger model",
+  "description": "Detailed validation of objects against a given swagger spec",
   "keywords": [
     "swagger",
     "api",
     "validator",
     "validation"
   ],
-  "main": "./main.js",
+  "main": "./src/index.js",
   "devDependencies": {
     "gulp": "^3.8.5",
     "boilerplate-gulp": "^0.1.0"
@@ -35,15 +35,15 @@
   "licenses": [
     {
       "type": "Apache License 2.0",
-      "url": "https://github.com/signalfuse/validate-swagger-model/blob/master/LICENSE-APACHE2"
+      "url": "https://github.com/signalfuse/swagger-validate/blob/master/LICENSE-APACHE2"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/signalfuse/validate-swagger-model.git"
+    "url": "git://github.com/signalfuse/swagger-validate.git"
   },
   "bugs": {
-    "url": "https://github.com/signalfuse/validate-swagger-model/issues"
+    "url": "https://github.com/signalfuse/swagger-validate/issues"
   },
-  "homepage": "https://github.com/signalfuse/validate-swagger-model"
+  "homepage": "https://github.com/signalfuse/swagger-validate"
 }

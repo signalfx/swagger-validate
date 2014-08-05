@@ -2,23 +2,23 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Swagger Model Validator</title>
+  <title>Swagger Validate</title>
 </head>
 <body>
 	 Is it valid? <span id="example"></span>
 
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="validate-swagger-model.js"></script>
+  <script src="swagger-validate.js"></script>
   <script>
     $.getJSON('./schema.json', function(schema){
       var pets = schema.apis[0].apiDeclaration;
-
-      var model = {
+      
+      var obj = {
         id: 9999999,
       //  name: 'Fifo'
       };
-      
-      var error = validateSwaggerModel(model, pets.models.Pet, pets.models);
+      var model = pets.models.Pet;
+      var error = swaggerValidate.model(obj, model, pets.models);
       if(error){
         $('#example').text('No! ' + error);
         throw error;
@@ -42,7 +42,7 @@
         age: 'blue'
     };
 
-    var error = validateSwaggerModel(myCat, catModel);
+    var error = swaggerValidate.model(myCat, catModel);
     if(error){
       console.error(error.toString());
     }

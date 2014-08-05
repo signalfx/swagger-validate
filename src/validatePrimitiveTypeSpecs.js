@@ -2,7 +2,7 @@
 
 /* jshint -W053 */
 
-var validators = require('./validators'),
+var validators = require('./validatePrimitiveTypes'),
   errorTypes = require('./errorTypes');
 
 describe('integer validator', function(){

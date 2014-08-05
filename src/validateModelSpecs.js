@@ -2,15 +2,15 @@
 
 /* jshint -W053 */
 
-var validators = require('./validators'),
+var validateModel = require('./validateModel'),
   errorTypes = require('./errorTypes');
 
 describe('model validator', function(){
   var models;
 
-  function hasModelValidationError(obj, model, models){
-    var result = validators.validateModel(obj, model, models);
-    return result instanceof errorTypes.ModelValidationError;
+  function hasValidationErrors(obj, model, models){
+    var result = validateModel(obj, model, models);
+    return result instanceof errorTypes.ValidationErrors;
   }
 
   beforeEach(function(){
@@ -78,22 +78,22 @@ describe('model validator', function(){
   });
 
   it('exists', function(){
-    expect(validators.validateModel).toBeDefined();
+    expect(validateModel).toBeDefined();
   });
 
   it('can handle models with primitive properties', function(){
-    expect(hasModelValidationError({ name: 'Bob Dole', age: 42}, models.Cat)).toBe(false);
+    expect(hasValidationErrors({ name: 'Bob Dole', age: 42}, models.Cat)).toBe(false);
 
-    expect(hasModelValidationError({ name: 'Bob Dole' }, models.Cat)).toBe(false);
+    expect(hasValidationErrors({ name: 'Bob Dole' }, models.Cat)).toBe(false);
 
-    expect(hasModelValidationError({}, models.Cat)).toBe(true);
+    expect(hasValidationErrors({}, models.Cat)).toBe(true);
 
-    expect(hasModelValidationError(null, models.Cat)).toBe(true);
+    expect(hasValidationErrors(null, models.Cat)).toBe(true);
   });
 
   it('can validate array properties', function(){
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bobby', 'Doug'],
           name: 'Bobby',
@@ -105,7 +105,7 @@ describe('model validator', function(){
     ).toBe(false);
 
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 123]
         }, 
@@ -117,7 +117,7 @@ describe('model validator', function(){
 
   it('can validate embedded models', function(){
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 'Dole'],
           name: 'Bobby',
@@ -133,7 +133,7 @@ describe('model validator', function(){
     ).toBe(false);
 
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 'Dole'],
           name: 'Bobby',
@@ -151,7 +151,7 @@ describe('model validator', function(){
     ).toBe(false);
 
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 'Dole'],
           name: 'Bobby',
@@ -174,7 +174,7 @@ describe('model validator', function(){
     ).toBe(false);
 
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 'Dole'],
           name: 'Bobby',
@@ -199,7 +199,7 @@ describe('model validator', function(){
 
   it('can validate inherited models', function(){
     expect(
-      hasModelValidationError(
+      hasValidationErrors(
         {
           names: ['Bob', 'Dole'],
           name: 'Bobby',
