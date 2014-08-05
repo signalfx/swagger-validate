@@ -24,9 +24,9 @@ var error = validateSwaggerModel(myCat, catModel);
 ```
 
 ## Installation and Use
-For nodejs, `npm install swagger-model-validator` then use `var validateSwaggerModel = require('validate-swagger-model')` to include it in a script.
+For nodejs: `npm install validate-swagger-model` then use `var validateSwaggerModel = require('validate-swagger-model')` to include it in a script.
 
-For browsers, include the `./dist/validate-swagger-model.js` file as a script tag to put the validateSwaggerModel function in the global scope. You may also `require` it with browserify or with Requirejs instead of including it as a script tag.
+For browsers: `bower install validate-swagger-model` or include the `./dist/validate-swagger-model.js` file as a script tag to put the validateSwaggerModel function in the global scope. You may also `require` it with browserify or with Requirejs instead of including it as a script tag.
 
 ## API
 
