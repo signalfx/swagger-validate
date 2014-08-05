@@ -83,7 +83,7 @@ This is a super class for the individual validation errors that can occur in pro
 * *MissingValueError* - The value is required by the model but doesn't exist.
 
 ## Developing
-After installing [nodejs](http://nodejs.org) do the following:
+After installing [nodejs](http://nodejs.org) execute the following:
 
 ```shell
 git clone https://github.com/signalfuse/swagger-validate.git
