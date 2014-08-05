@@ -1,7 +1,7 @@
 {
   "name": "validate-swagger-model",
   "version": "0.1.0",
-  "description": "Validates objects against a given swagger model",
+  "description": "Detailed validation of objects against a given swagger model",
   "keywords": [
     "swagger",
     "api",
