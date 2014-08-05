@@ -1,6 +1,10 @@
 # Validate Swagger Objects
 
-A detailed validation provider for [Swagger](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects:
+A detailed validation provider for [Swagger](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects.
+
+Given a relevant Swagger spec, this tool will provide detailed information about any validation errors which can be
+caught automatically. This is useful for catching invalid requests to a server on the client-side before a call is
+ever issues. Currently, these objects can be validated according to their Swagger specification:
 * [Models](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#527-model-object) (supports inheritance)
 * [Operations](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#523-operation-object)
 * [Data types](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#433-data-type-fields)
