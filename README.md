@@ -1,4 +1,5 @@
 # Validate Swagger Objects
+[![Build Status](https://travis-ci.org/signalfuse/swagger-validate.svg?branch=master)](https://travis-ci.org/signalfuse/swagger-validate)
 
 A detailed validation provider for [Swagger](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects.
 
