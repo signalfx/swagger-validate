@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "devDependencies": {
     "gulp": "^3.8.5",
-    "boilerplate-gulp": "^0.1.0"
+    "boilerplate-gulp": "^0.2.1"
   },
   "directories": {
     "jsSrc": "./src",
