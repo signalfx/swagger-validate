@@ -26,17 +26,6 @@ function validateOperation(candidate, operation, models){
       errors.push(new ValidationError(param.name, param, error));
     }
   });
-
-  Object.keys(candidate).forEach(function(paramName){
-    var parameter = operation.parameters.filter(function(param){
-      return param.name === paramName;
-    })[0];
-
-    var error = validate.dataType(candidate[paramName], parameter, models);
-    if(error){
-      errors.push(new ValidationError(paramName, parameter, error));
-    }
-  });
   
   if(errors.length){
     return new ValidationErrors(candidate, operation.nickname, operation, errors);
