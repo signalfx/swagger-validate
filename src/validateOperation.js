@@ -9,14 +9,23 @@ var errorTypes = require('./errorTypes'),
 function validateOperation(candidate, operation, models){
   var errors = [];
   
-  operation.parameters.forEach(function(param){
-    if (!param.required) return;
-    if (param.name in candidate) return;
+  var presentParams = operation.parameters.filter(function(param){
+    if (param.name in candidate) return true;
+    
+    if (param.required) {
+      var error = new MissingValueError();
+      errors.push(new ValidationError(param.name, param, error));
+    }
 
-    var error = new MissingValueError();
-    errors.push(new ValidationError(param.name, param, error));
+    return false;
   });
 
+  presentParams.forEach(function(param){
+    var error = validate.dataType(candidate[param.name], param, models);
+    if(error){
+      errors.push(new ValidationError(param.name, param, error));
+    }
+  });
 
   Object.keys(candidate).forEach(function(paramName){
     var parameter = operation.parameters.filter(function(param){
