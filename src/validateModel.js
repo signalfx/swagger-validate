@@ -57,7 +57,7 @@ function validateModel(candidate, model, models){
   var errors = [];
 
   model.required.forEach(function(propertyName){
-    if (propertyName in candidate) return;
+    if (candidate[propertyName] !== undefined) return;
 
     var property = model.properties[propertyName];
     var error = new MissingValueError();

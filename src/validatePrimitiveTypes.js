@@ -17,11 +17,11 @@ function validateNumber(candidate, dataType){
     return new errorTypes.NotANumberError(candidate, typeof candidate);
   }
   
-  if(('minimum' in dataType) && candidate < parseInt(dataType.minimum, 10)){
+  if((dataType.minimum !== undefined) && candidate < parseInt(dataType.minimum, 10)){
     return new errorTypes.NumberTooSmallError(candidate, dataType.minimum);
   }
   
-  if(('maximum' in dataType) && candidate > parseInt(dataType.maximum, 10)){
+  if((dataType.maximum !== undefined) && candidate > parseInt(dataType.maximum, 10)){
     return new errorTypes.NumberTooLargeError(candidate, dataType.maximum);
   }
 }
