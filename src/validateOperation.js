@@ -10,7 +10,7 @@ function validateOperation(candidate, operation, models){
   var errors = [];
   
   var presentParams = operation.parameters.filter(function(param){
-    if (param.name in candidate) return true;
+    if (candidate[param.name] !== undefined) return true;
     
     if (param.required) {
       var error = new MissingValueError();
