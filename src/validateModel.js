@@ -66,6 +66,8 @@ function validateModel(candidate, model, models){
 
   Object.keys(candidate).forEach(function(propertyName){
     var property = model.properties[propertyName];
+    
+    if(property === undefined) return;
 
     var error = validate.dataType(candidate[propertyName], property, models);
     if(error){
