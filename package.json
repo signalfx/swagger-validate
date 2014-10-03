@@ -1,6 +1,6 @@
 {
   "name": "swagger-validate",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Detailed validation of objects against a given swagger spec",
   "keywords": [
     "swagger",
@@ -35,15 +35,15 @@
   "licenses": [
     {
       "type": "Apache License 2.0",
-      "url": "https://github.com/signalfuse/swagger-validate/blob/master/LICENSE-APACHE2"
+      "url": "https://github.com/signalfx/swagger-validate/blob/master/LICENSE-APACHE2"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/signalfuse/swagger-validate.git"
+    "url": "git://github.com/signalfx/swagger-validate.git"
   },
   "bugs": {
-    "url": "https://github.com/signalfuse/swagger-validate/issues"
+    "url": "https://github.com/signalfx/swagger-validate/issues"
   },
-  "homepage": "https://github.com/signalfuse/swagger-validate"
+  "homepage": "https://github.com/signalfx/swagger-validate"
 }

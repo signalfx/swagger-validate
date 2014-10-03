@@ -1,5 +1,5 @@
 # Validate Swagger Objects
-[![Build Status](https://travis-ci.org/signalfuse/swagger-validate.svg?branch=master)](https://travis-ci.org/signalfuse/swagger-validate)
+[![Build Status](https://travis-ci.org/signalfx/swagger-validate.svg?branch=master)](https://travis-ci.org/signalfx/swagger-validate)
 
 A detailed validation provider for [Swagger](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) objects.
 
@@ -87,7 +87,7 @@ This is a super class for the individual validation errors that can occur in pro
 After installing [nodejs](http://nodejs.org) execute the following:
 
 ```shell
-git clone https://github.com/signalfuse/swagger-validate.git
+git clone https://github.com/signalfx/swagger-validate.git
 cd swagger-validate
 npm install
 npm run dev
