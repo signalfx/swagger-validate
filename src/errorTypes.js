@@ -129,6 +129,15 @@ MissingValueError.prototype = Object.create(DataTypeValidationError.prototype);
 MissingValueError.prototype.constructor = MissingValueError;
 exports.MissingValueError = MissingValueError;
 
+function UnexpectedValueError(){
+  this.name = 'UnexpectedValueError';
+
+  this.message = 'This value is unexpected';
+}
+UnexpectedValueError.prototype = Object.create(DataTypeValidationError.prototype);
+UnexpectedValueError.prototype.constructor = UnexpectedValueError;
+exports.UnexpectedValueError = UnexpectedValueError;
+
 function ValidationError(specName, spec, error){
   this.name = 'ValidationError';
   this.specName = specName;
