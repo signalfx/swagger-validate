@@ -2,9 +2,28 @@
 
 var errorTypes = require('./errorTypes');
 
-function validateInteger(candidate, dataType){
-  var error = validateNumber(candidate, dataType);
-  if(error) return error;
+function validateInteger(candidate, dataType, format){
+  var error;
+  if( !format ) {
+    error = validateNumber(candidate, dataType);
+  }
+  else if(format === 'int32') {
+    var int32Max = Math.pow(2, 31) - 1;
+    var value = parseInt(property);
+    if(isNaN(value) || !isFinite(property) || value < -(int32Max + 1) || value > int32Max) {
+      error = new errorTypes.NotANumberError(candidate, typeof candidate);
+    }
+  }
+  else if(format === 'int64') {
+    var value = parseInt(property);
+    if(isNaN(value) || !isFinite(property)) {
+      error = new errorTypes.NotANumberError(candidate, typeof candidate);
+    }
+  }
+
+  if(error) {
+    return error;
+  }
 
   if(candidate % 1){
     return new errorTypes.NotAnIntegerError(candidate);
@@ -12,7 +31,7 @@ function validateInteger(candidate, dataType){
 }
 exports.validateInteger = validateInteger;
 
-function validateNumber(candidate, dataType){
+function validateNumber(candidate, dataType, format){
   if(!(typeof candidate === 'number' || candidate instanceof Number) || isNaN(candidate)){
     return new errorTypes.NotANumberError(candidate, typeof candidate);
   }
@@ -47,7 +66,7 @@ function validateFile(){
 }
 exports.validateFile = validateFile;
 
-function validateString(candidate, dataType){
+function validateString(candidate, dataType, format, pattern){
   if(typeof candidate !== 'string' && !(candidate instanceof String)){
     return new errorTypes.NotAStringError(candidate, typeof candidate);
   }
@@ -57,5 +76,30 @@ function validateString(candidate, dataType){
       return new errorTypes.StringNotInEnumError(candidate, dataType.enum);
     }
   }
+
+  if( format === 'date-time' || format === 'date' ) {
+    var date = new Date(candidate);
+    if(date !== "Invalid Date" && !isNaN(date) && isNaN(candidate)) {
+      if(format === 'date' && property.length !== 10) {
+        return new errorTypes.NotADateValueError(candidate, typeof candidate);
+      }
+    }
+    else {
+      return new errorTypes.NotADateValueError(candidate, typeof candidate);
+    }
+  }
+
+  if( pattern ) {
+    var regExp = new RegExp(pattern);
+    if( !regExp.test(candidate) ) {
+      return new errorTypes.StringFormatNotValidError(candidate, pattern);
+    }
+  }
 }
 exports.validateString = validateString;
+
+
+function validateDateTime(candidate, dataType){
+  return ( (new Date(candidate) !== "Invalid Date" && !isNaN(new Date(candidate)) ));
+}
+exports.validateDateTime = validateDateTime;

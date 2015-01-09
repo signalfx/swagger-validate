@@ -70,7 +70,7 @@ function validateModel(candidate, model, models, options){
     var property = model.properties[propertyName];
     
     if(property === undefined) {
-      if( options.validateUnexpectedValues ) {
+      if( options.checkUnexpectedValues ) {
         errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError()));
       }
       return;
