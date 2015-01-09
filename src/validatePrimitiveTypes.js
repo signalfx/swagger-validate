@@ -9,14 +9,14 @@ function validateInteger(candidate, dataType, format){
   }
   else if(format === 'int32') {
     var int32Max = Math.pow(2, 31) - 1;
-    var value = parseInt(property);
-    if(isNaN(value) || !isFinite(property) || value < -(int32Max + 1) || value > int32Max) {
+    var int32Value = parseInt(candidate);
+    if(isNaN(int32Value) || !isFinite(candidate) || int32Value < -(int32Max + 1) || int32Value > int32Max) {
       error = new errorTypes.NotANumberError(candidate, typeof candidate);
     }
   }
   else if(format === 'int64') {
-    var value = parseInt(property);
-    if(isNaN(value) || !isFinite(property)) {
+    var int64Value = parseInt(candidate);
+    if(isNaN(int64Value) || !isFinite(candidate)) {
       error = new errorTypes.NotANumberError(candidate, typeof candidate);
     }
   }
@@ -79,8 +79,8 @@ function validateString(candidate, dataType, format, pattern){
 
   if( format === 'date-time' || format === 'date' ) {
     var date = new Date(candidate);
-    if(date !== "Invalid Date" && !isNaN(date) && isNaN(candidate)) {
-      if(format === 'date' && property.length !== 10) {
+    if(date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
+      if(format === 'date' && candidate.length !== 10) {
         return new errorTypes.NotADateValueError(candidate, typeof candidate);
       }
     }
@@ -97,9 +97,3 @@ function validateString(candidate, dataType, format, pattern){
   }
 }
 exports.validateString = validateString;
-
-
-function validateDateTime(candidate, dataType){
-  return ( (new Date(candidate) !== "Invalid Date" && !isNaN(new Date(candidate)) ));
-}
-exports.validateDateTime = validateDateTime;
