@@ -31,7 +31,7 @@ function validateInteger(candidate, dataType, format){
 }
 exports.validateInteger = validateInteger;
 
-function validateNumber(candidate, dataType, format){
+function validateNumber(candidate, dataType){
   if(!(typeof candidate === 'number' || candidate instanceof Number) || isNaN(candidate)){
     return new errorTypes.NotANumberError(candidate, typeof candidate);
   }
