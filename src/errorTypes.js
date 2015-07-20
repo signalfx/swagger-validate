@@ -111,6 +111,29 @@ StringNotInEnumError.prototype.constructor = StringNotInEnumError;
 exports.StringNotInEnumError = StringNotInEnumError;
 
 
+function StringFormatNotValidError(value, pattern){
+  this.name = 'StringFormatNotValidError';
+  this.message = '"' + value + '" is not an acceptable value: "' + pattern + '"';
+
+  this.value = value;
+}
+StringFormatNotValidError.prototype = Object.create(DataTypeValidationError.prototype);
+StringFormatNotValidError.prototype.constructor = StringFormatNotValidError;
+exports.StringFormatNotValidError = StringFormatNotValidError;
+
+
+function NotADateValueError(value, actualType){
+  this.name = 'NotADateValueError';
+  this.message = '"' + value + '" is not a date value';
+  if(actualType) this.message += ' (got a ' + actualType + ' instead)';
+
+  this.value = value;
+}
+NotADateValueError.prototype = Object.create(DataTypeValidationError.prototype);
+NotADateValueError.prototype.constructor = NotADateValueError;
+exports.NotADateValueError = NotADateValueError;
+
+
 function ErrorsInArrayElementsError(errors){
   this.name = 'ErrorsInArrayElementsError';
   this.message = 'Errors in array elements:\n\t' + errors.join(',\n\t');
@@ -128,6 +151,15 @@ function MissingValueError(){
 MissingValueError.prototype = Object.create(DataTypeValidationError.prototype);
 MissingValueError.prototype.constructor = MissingValueError;
 exports.MissingValueError = MissingValueError;
+
+function UnexpectedValueError(){
+  this.name = 'UnexpectedValueError';
+
+  this.message = 'This value is unexpected';
+}
+UnexpectedValueError.prototype = Object.create(DataTypeValidationError.prototype);
+UnexpectedValueError.prototype.constructor = UnexpectedValueError;
+exports.UnexpectedValueError = UnexpectedValueError;
 
 function ValidationError(specName, spec, error){
   this.name = 'ValidationError';
