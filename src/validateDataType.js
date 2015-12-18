@@ -1,11 +1,16 @@
 'use strict';
 
 var validate = require('./index');
-  
+
 function validateDataType(candidate, dataType, models){
   models = models || {};
-      
   var type = dataType.type || dataType.dataType || dataType.$ref;
+  var types;
+
+  if (Array.isArray(type)) {
+      types = type;
+      type = 'multiple';
+  }
 
   switch(type){
     case 'integer':
@@ -22,6 +27,21 @@ function validateDataType(candidate, dataType, models){
       return validate.primitive.void(candidate);
     case 'File':
       return validate.primitive.file();
+    case 'multiple':
+      var errors = [];
+      Object.keys(types).forEach(function(key) {
+        dataType.type = types[key];
+        var error = validate.dataType(candidate, dataType ,models);
+        if (error) {
+          errors.push(error);
+        }
+      });
+
+      if (errors.length < type.length) {
+        return null;
+      } else {
+        return errors;
+      }
     default:
       // Assumed to be complex model
       var model = models[type];
