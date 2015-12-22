@@ -30,8 +30,7 @@ function validateDataType(candidate, dataType, models){
     case 'multiple':
       var errors = [];
       Object.keys(types).forEach(function(key) {
-        dataType.type = types[key];
-        var error = validate.dataType(candidate, dataType ,models);
+        var error = validate.dataType(candidate, {type: types[key]} ,models);
         if (error) {
           errors.push(error);
         }
@@ -42,6 +41,7 @@ function validateDataType(candidate, dataType, models){
       } else {
         return errors;
       }
+      break;
     default:
       // Assumed to be complex model
       var model = models[type];
