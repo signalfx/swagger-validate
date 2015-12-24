@@ -1,3 +1,5 @@
+'use strict';
+
 exports.dataType = require('./validateDataType');
 exports.model = require('./validateModel');
 exports.operation = require('./validateOperation');
