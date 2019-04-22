@@ -11,6 +11,7 @@
   "main": "./src/index.js",
   "devDependencies": {
     "acorn": "^6.1.1",
+    "moment": "^2.20.1",
     "boilerplate-gulp": "^1.0.0",
     "gulp": "^4.0.1",
     "jasmine": "^3.4.0",

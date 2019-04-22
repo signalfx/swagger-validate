@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 var errorTypes = require('./errorTypes');
 
 function validateInteger(candidate, dataType, format){
@@ -73,16 +74,16 @@ function validateString(candidate, dataType, format, pattern){
     }
   }
   
-  if( format === 'date-time' || format === 'date' ) {
-    var date = new Date(candidate);
-    if(date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
-      if(format === 'date' && candidate.length !== 10) {
-        return new errorTypes.NotADateValueError(candidate, typeof candidate);
-      }
-    }
-    else {
+  if( format === 'date-time') {
+    if (!moment(candidate, moment.ISO_8601,true).isValid()) {
       return new errorTypes.NotADateValueError(candidate, typeof candidate);
     }
+  }else if(format === 'date')
+    var date = new Date(candidate);
+    if(date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
+      if( candidate.length !== 10) {
+        return new errorTypes.NotADateValueError(candidate, typeof candidate);
+      }
   }
 
    if( pattern ) {
