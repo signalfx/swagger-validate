@@ -83,7 +83,7 @@ function validateModel(candidate, model, models,options){
   });
   
   if(errors.length){
-    return new ValidationErrors(candidate, model.id, model, errors);
+    throw new ValidationErrors(candidate, model.id, model, errors);
   }
 }
 module.exports = validateModel;
