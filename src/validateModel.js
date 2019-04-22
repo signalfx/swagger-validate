@@ -4,6 +4,7 @@ var errorTypes = require('./errorTypes'),
   ValidationError = errorTypes.ValidationError,
   ValidationErrors = errorTypes.ValidationErrors,
   MissingValueError = errorTypes.MissingValueError,
+  UnexpectedValueError = errorTypes.UnexpectedValueError,
   validate = require('./index');
 
 // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
@@ -43,12 +44,13 @@ function addInhertiedProperties(model, modelId, models){
   addInhertiedProperties(model, parent.id, models);
 }
 
-function validateModel(candidate, model, models){
+function validateModel(candidate, model, models,options){
   if(candidate === null || typeof candidate !== 'object'){
     return new ValidationErrors(candidate, model);
   }
 
   models = models || {};
+  options = options || {};
 
   model = clone(model);
   if(!model.required) model.required = [];
@@ -67,7 +69,12 @@ function validateModel(candidate, model, models){
   Object.keys(candidate).forEach(function(propertyName){
     var property = model.properties[propertyName];
     
-    if(property === undefined) return;
+    if(property === undefined) {
+      if( options.checkUnexpectedValues ) {
+        errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError()));
+      }
+      return;
+    }
 
     var error = validate.dataType(candidate[propertyName], property, models);
     if(error){
