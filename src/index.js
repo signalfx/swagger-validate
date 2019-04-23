@@ -1,7 +1,7 @@
 exports.dataType = require('./validateDataType');
 exports.model = require('./validateModel');
 exports.operation = require('./validateOperation');
-exports.array = require('./validateArray').default.default;
+exports.array = require('./validateArray');
 exports.errors = require('./errorTypes');
 
 const primitives = require('./validatePrimitiveTypes');
