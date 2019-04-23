@@ -126,11 +126,11 @@ function validateString(candidate, dataType, format, pattern) {
       return new errorTypes.NotADateValueError(candidate, typeof candidate);
     }
   } else if (format === 'date') {
-    date = new Date(candidate);
-  }
-  if (date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
-    if ( candidate.length !== 10) {
-      return new errorTypes.NotADateValueError(candidate, typeof candidate);
+    const date = new Date(candidate);
+    if (date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
+      if ( candidate.length !== 10) {
+        return new errorTypes.NotADateValueError(candidate, typeof candidate);
+      }
     }
   }
 
