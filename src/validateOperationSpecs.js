@@ -1,20 +1,25 @@
 'use strict';
 
-/* jshint -W053 */
+const validateOperation = require('./validateOperation');
+const errorTypes = require('./errorTypes');
 
-var validateOperation = require('./validateOperation'),
-  errorTypes = require('./errorTypes');
+describe('operation validator', function() {
+  let models;
+  let operations;
 
-describe('operation validator', function(){
-  var models,
-    operations;
-
-  function hasValidationErrors(obj, operation, models){
-    var result = validateOperation(obj, operation, models);
+  /**
+   *
+   * @param {*} obj - obj
+   * @param {*} operation - operation
+   * @param {*} models - map of models
+   * @return {boolean}
+   */
+  function hasValidationErrors(obj, operation, models) {
+    const result = validateOperation(obj, operation, models);
     return result instanceof errorTypes.ValidationErrors;
   }
 
-  beforeEach(function(){
+  beforeEach(function() {
     operations = {
       create: {
         method: 'PUT',
@@ -24,22 +29,22 @@ describe('operation validator', function(){
             paramType: 'path',
             required: true,
             name: 'name',
-            type: 'string'
+            type: 'string',
           },
           {
             paramType: 'form',
             name: 'age',
             type: 'number',
             maximum: '100',
-            minimum: '1'
+            minimum: '1',
           },
           {
             paramType: 'form',
             name: 'captain',
-            type: 'Captain'
-          }
-        ]
-      }
+            type: 'Captain',
+          },
+        ],
+      },
     };
 
     models = {
@@ -47,29 +52,29 @@ describe('operation validator', function(){
         id: 'Captain',
         required: ['names'],
         properties: {
-          names: { 
+          names: {
             type: 'array',
             uniqueItems: true,
             items: {
-              type: 'string'
-            }
+              type: 'string',
+            },
           },
           hat: {
-            $ref: 'Hat'
+            $ref: 'Hat',
           },
           ships: {
             type: 'array',
             items: {
-              $ref: 'Ship'
-            }
-          }
-        }
+              $ref: 'Ship',
+            },
+          },
+        },
       },
       Hat: {
         id: 'Hat',
         properties: {
-          color: { type: 'string' }
-        }
+          color: {type: 'string'},
+        },
       },
       Ship: {
         id: 'Ship',
@@ -78,123 +83,123 @@ describe('operation validator', function(){
           crewCount: {
             type: 'integer',
             minimum: '1',
-            maximum: '10'
+            maximum: '10',
           },
-          firstMate: { $ref: 'Person' }
-        }
+          firstMate: {$ref: 'Person'},
+        },
       },
       Person: {
         id: 'Person',
         required: ['name', 'type'],
         properties: {
-          type: { type: 'string' },
-          name: { type: 'string' },
-          age: { type: 'number' }
+          type: {type: 'string'},
+          name: {type: 'string'},
+          age: {type: 'number'},
         },
         subTypes: ['Captain'],
-        discriminator: 'type'
+        discriminator: 'type',
       },
       Cat: {
         id: 'Cat',
         required: ['name'],
         properties: {
-          name: { type: 'string' },
-          age: { type: 'number' }
-        }
-      }
+          name: {type: 'string'},
+          age: {type: 'number'},
+        },
+      },
     };
   });
 
-  it('exists', function(){
+  it('exists', function() {
     expect(validateOperation).toBeDefined();
   });
 
-  it('can handle operations with primitive parameters', function(){
+  it('can handle operations with primitive parameters', function() {
     expect(
-      hasValidationErrors(
-        {
-          name: 'Joe'
-        },
-        operations.create,
-        models
-      )
+        hasValidationErrors(
+            {
+              name: 'Joe',
+            },
+            operations.create,
+            models
+        )
     ).toBe(false);
 
     expect(
-      hasValidationErrors(
-        {
-          name: 'Joe',
-          age: 42
-        },
-        operations.create,
-        models
-      )
+        hasValidationErrors(
+            {
+              name: 'Joe',
+              age: 42,
+            },
+            operations.create,
+            models
+        )
     ).toBe(false);
 
     expect(
-      hasValidationErrors(
-        {
-          name: 'Joe',
-          age: -42
-        },
-        operations.create,
-        models
-      )
+        hasValidationErrors(
+            {
+              name: 'Joe',
+              age: -42,
+            },
+            operations.create,
+            models
+        )
     ).toBe(true);
 
     expect(
-      hasValidationErrors(
-        {
-          age: 42
-        },
-        operations.create,
-        models
-      )
-    ).toBe(true);    
+        hasValidationErrors(
+            {
+              age: 42,
+            },
+            operations.create,
+            models
+        )
+    ).toBe(true);
   });
 
 
-  it('can handle operations with complex parameters', function(){
+  it('can handle operations with complex parameters', function() {
     expect(
-      hasValidationErrors(
-        {
-          name: 'Jimmy',
-          captain: {
-            names: ['Bob', 'Dole'],
-            name: 'Bobby',
-            type: 'Captain',
-            hat: {
-              color: 'blue'
+        hasValidationErrors(
+            {
+              name: 'Jimmy',
+              captain: {
+                names: ['Bob', 'Dole'],
+                name: 'Bobby',
+                type: 'Captain',
+                hat: {
+                  color: 'blue',
+                },
+                ships: [{
+                  crewCount: 5,
+                }],
+              },
             },
-            ships: [{
-              crewCount: 5
-            }]
-          }
-        },
-        operations.create,
-        models
-      )
+            operations.create,
+            models
+        )
     ).toBe(false);
 
     expect(
-      hasValidationErrors(
-        {
-          name: 'Jimmy',
-          captain: {
-            names: ['Bob', 'Dole'],
-            name: 'Bobby',
-            type: 'Captain',
-            hat: {
-              color: 'blue'
+        hasValidationErrors(
+            {
+              name: 'Jimmy',
+              captain: {
+                names: ['Bob', 'Dole'],
+                name: 'Bobby',
+                type: 'Captain',
+                hat: {
+                  color: 'blue',
+                },
+                ships: [{
+                  crewCount: 0,
+                }],
+              },
             },
-            ships: [{
-              crewCount: 0
-            }]
-          }
-        },
-        operations.create,
-        models
-      )
-    ).toBe(true); // crewCount below min    
+            operations.create,
+            models
+        )
+    ).toBe(true); // crewCount below min
   });
 });

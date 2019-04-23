@@ -1,32 +1,41 @@
 'use strict';
 
-/* jshint -W053 */
+const validators = require('./validatePrimitiveTypes');
+const errorTypes = require('./errorTypes');
 
-var validators = require('./validatePrimitiveTypes'),
-  errorTypes = require('./errorTypes');
-
-describe('integer validator', function(){
-  it('exists', function(){
+describe('integer validator', function() {
+  it('exists', function() {
     expect(validators.validateInteger).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateInteger(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateInteger(value, dataType);
       expect(result).toBeUndefined();
     }
 
     test(0, {});
     test(1, {});
-    test(new Number('2'), {});
-    test(10, { minimum: 10 });
-    test(10, { maximum: 10 });
-    test(7, { minimum: 5, maximum: 10 });
+    test(Number('2'), {});
+    test(10, {minimum: 10});
+    test(10, {maximum: 10});
+    test(7, {minimum: 5, maximum: 10});
   });
 
-  it('throws errors for invalid values', function(){
-    function test(value, dataType, errorType){
-      var result = validators.validateInteger(value, dataType);
+  it('throws errors for invalid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     * @param {*} errorType - error type
+     */
+    function test(value, dataType, errorType) {
+      const result = validators.validateInteger(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 
@@ -35,34 +44,45 @@ describe('integer validator', function(){
     test('3', {}, errorTypes.NotANumberError);
     test(3.14, {}, errorTypes.NotAnIntegerError);
     test(NaN, {}, errorTypes.NotANumberError);
-    test(10, { minimum: 100 }, errorTypes.NumberTooSmallError);
-    test(10, { maximum: 2 }, errorTypes.NumberTooLargeError);
-    test(7, { minimum: 8, maximum: 10 }, errorTypes.NumberTooSmallError);
+    test(10, {minimum: 100}, errorTypes.NumberTooSmallError);
+    test(10, {maximum: 2}, errorTypes.NumberTooLargeError);
+    test(7, {minimum: 8, maximum: 10}, errorTypes.NumberTooSmallError);
   });
 });
 
-describe('number validator', function(){
-  it('exists', function(){
+describe('number validator', function() {
+  it('exists', function() {
     expect(validators.validateNumber).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateNumber(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateNumber(value, dataType);
       expect(result).toBeUndefined();
     }
 
     test(0, {});
     test(1, {});
-    test(new Number('2'), {});
-    test(10, { minimum: 10 });
-    test(10, { maximum: 10 });
-    test(5.1, { minimum: 5, maximum: 10 });
+    test(Number('2'), {});
+    test(10, {minimum: 10});
+    test(10, {maximum: 10});
+    test(5.1, {minimum: 5, maximum: 10});
   });
 
-  it('throws errors for invalid values', function(){
-    function test(value, dataType, errorType){
-      var result = validators.validateNumber(value, dataType);
+  it('throws errors for invalid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     * @param {*} errorType - error type
+     */
+    function test(value, dataType, errorType) {
+      const result = validators.validateNumber(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 
@@ -70,32 +90,43 @@ describe('number validator', function(){
     test(true, {}, errorTypes.NotANumberError);
     test('3', {}, errorTypes.NotANumberError);
     test(NaN, {}, errorTypes.NotANumberError);
-    test(10, { minimum: 100 }, errorTypes.NumberTooSmallError);
-    test(10, { maximum: 2 }, errorTypes.NumberTooLargeError);
-    test(7, { minimum: 8, maximum: 10 }, errorTypes.NumberTooSmallError);
+    test(10, {minimum: 100}, errorTypes.NumberTooSmallError);
+    test(10, {maximum: 2}, errorTypes.NumberTooLargeError);
+    test(7, {minimum: 8, maximum: 10}, errorTypes.NumberTooSmallError);
   });
 });
 
-describe('boolean validator', function(){
-  it('exists', function(){
+describe('boolean validator', function() {
+  it('exists', function() {
     expect(validators.validateBoolean).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateBoolean(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateBoolean(value, dataType);
       expect(result).toBeUndefined();
     }
 
     test(false, {});
     test(true, {});
-    test(new Boolean(true), {});
-    test(new Boolean(false), {});
+    test(Boolean(true), {});
+    test(Boolean(false), {});
   });
 
-  it('throws errors for invalid values', function(){
-    function test(value, dataType, errorType){
-      var result = validators.validateBoolean(value, dataType);
+  it('throws errors for invalid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     * @param {*} errorType - error type
+     */
+    function test(value, dataType, errorType) {
+      const result = validators.validateBoolean(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 
@@ -110,14 +141,19 @@ describe('boolean validator', function(){
   });
 });
 
-describe('void validator', function(){
-  it('exists', function(){
+describe('void validator', function() {
+  it('exists', function() {
     expect(validators.validateVoid).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateVoid(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateVoid(value, dataType);
       expect(result).toBeUndefined();
     }
 
@@ -125,9 +161,15 @@ describe('void validator', function(){
     test(undefined, {});
   });
 
-  it('throws errors for invalid values', function(){
-    function test(value, dataType, errorType){
-      var result = validators.validateVoid(value, dataType);
+  it('throws errors for invalid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     * @param {*} errorType - error type
+     */
+    function test(value, dataType, errorType) {
+      const result = validators.validateVoid(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 
@@ -135,19 +177,24 @@ describe('void validator', function(){
     test(0, {}, errorTypes.NotVoidError);
     test(false, {}, errorTypes.NotVoidError);
     test(9101, {}, errorTypes.NotVoidError);
-    test(function(){}, {}, errorTypes.NotVoidError);
+    test(function() {}, {}, errorTypes.NotVoidError);
     test({}, {}, errorTypes.NotVoidError);
   });
 });
 
-describe('file validator', function(){
-  it('exists', function(){
+describe('file validator', function() {
+  it('exists', function() {
     expect(validators.validateFile).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateFile(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateFile(value, dataType);
       expect(result).toBeUndefined();
     }
 
@@ -159,14 +206,19 @@ describe('file validator', function(){
   });
 });
 
-describe('string validator', function(){
-  it('exists', function(){
+describe('string validator', function() {
+  it('exists', function() {
     expect(validators.validateString).toBeDefined();
   });
 
-  it('doesn\'t throw errors for valid values', function(){
-    function test(value, dataType){
-      var result = validators.validateString(value, dataType);
+  it('doesn\'t throw errors for valid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     */
+    function test(value, dataType) {
+      const result = validators.validateString(value, dataType);
       expect(result).toBeUndefined();
     }
 
@@ -181,16 +233,22 @@ describe('string validator', function(){
     test('', {enum: ['']});
   });
 
-  it('throws errors for invalid values', function(){
-    function test(value, dataType, errorType){
-      var result = validators.validateString(value, dataType);
+  it('throws errors for invalid values', function() {
+    /**
+     * test
+     * @param {*} value - value
+     * @param {*} dataType - data type
+     * @param {*} errorType - error type
+     */
+    function test(value, dataType, errorType) {
+      const result = validators.validateString(value, dataType);
       expect(result instanceof errorType).toBe(true);
     }
 
     test(null, {}, errorTypes.NotAStringError);
     test(undefined, {}, errorTypes.NotAStringError);
     test(123, {}, errorTypes.NotAStringError);
-    test(function(){}, {}, errorTypes.NotAStringError);
+    test(function() {}, {}, errorTypes.NotAStringError);
     test({}, {}, errorTypes.NotAStringError);
     test(false, {}, errorTypes.NotAStringError);
     test('invalid', {enum: ['valid']}, errorTypes.StringNotInEnumError);

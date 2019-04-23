@@ -1,33 +1,40 @@
 'use strict';
 
-var errorTypes = require('./errorTypes'),
-  ValidationError = errorTypes.ValidationError,
-  ValidationErrors = errorTypes.ValidationErrors,
-  MissingValueError = errorTypes.MissingValueError,
-  validate = require('./index');
+const errorTypes = require('./errorTypes');
+const ValidationError = errorTypes.ValidationError;
+const ValidationErrors = errorTypes.ValidationErrors;
+const MissingValueError = errorTypes.MissingValueError;
+const validate = require('./index');
 
-function validateOperation(candidate, operation, models){
-  var errors = [];
-  
-  var presentParams = operation.parameters.filter(function(param){
+/**
+ * validateOperation
+ * @param {*} candidate - value to validate
+ * @param {*} operation - operation
+ * @param {*} models - map of models
+ * @return {ValidationErrors}
+ */
+function validateOperation(candidate, operation, models) {
+  const errors = [];
+
+  const presentParams = operation.parameters.filter(function(param) {
     if (candidate[param.name] !== undefined) return true;
-    
+
     if (param.required) {
-      var error = new MissingValueError();
+      const error = new MissingValueError();
       errors.push(new ValidationError(param.name, param, error));
     }
 
     return false;
   });
 
-  presentParams.forEach(function(param){
-    var error = validate.dataType(candidate[param.name], param, models);
-    if(error){
+  presentParams.forEach(function(param) {
+    const error = validate.dataType(candidate[param.name], param, models);
+    if (error) {
       errors.push(new ValidationError(param.name, param, error));
     }
   });
-  
-  if(errors.length){
+
+  if (errors.length) {
     return new ValidationErrors(candidate, operation.nickname, operation, errors);
   }
 }

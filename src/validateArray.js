@@ -1,25 +1,32 @@
 'use strict';
 
-var errorTypes = require('./errorTypes'),
-  validate = require('./index');
+const errorTypes = require('./errorTypes');
+const validate = require('./index');
 
-function validateArray(candidate, dataType, models){
-  if(!Array.isArray(candidate)){
+/**
+ * validateArray
+ * @param {*} candidate -  value to validate
+ * @param {*} dataType - model
+ * @param {*} models - map of models with name as key
+ * @return {Error} - errors
+ */
+function validateArray(candidate, dataType, models) {
+  if (!Array.isArray(candidate)) {
     return new errorTypes.NotAnArrayError(candidate, typeof candidate);
   }
 
-  var items = dataType.items;
+  const items = dataType.items;
 
-  if(dataType.uniqueItems){
-    var dupeCheck = [];
-    var dupes = candidate.filter(function(value){
-      var signature;
-      if(items.$ref){
+  if (dataType.uniqueItems) {
+    const dupeCheck = [];
+    const dupes = candidate.filter(function(value) {
+      let signature;
+      if (items.$ref) {
         signature = JSON.stringify(value);
       } else {
         signature = value;
       }
-      if(dupeCheck.indexOf(signature) !== -1){
+      if (dupeCheck.indexOf(signature) !== -1) {
         return true;
       } else {
         dupeCheck.push(signature);
@@ -27,25 +34,25 @@ function validateArray(candidate, dataType, models){
       }
     });
 
-    if(dupes.length) {
+    if (dupes.length) {
       return new errorTypes.DuplicateInSetError(candidate, dupes);
     }
   }
 
-  var errors;
+  let errors;
 
-  if(items.$ref){
-    var model = models[items.$ref];
-    errors = candidate.filter(function(value){
+  if (items.$ref) {
+    const model = models[items.$ref];
+    errors = candidate.filter(function(value) {
       return validate.model(value, model, models);
     });
   } else {
-    errors = candidate.filter(function(value){
+    errors = candidate.filter(function(value) {
       return validate.dataType(value, items, models);
     });
   }
 
-  if(errors.length){
+  if (errors.length) {
     return new errorTypes.ErrorsInArrayElementsError(errors);
   }
 }
