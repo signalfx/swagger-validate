@@ -115,10 +115,10 @@ function validateString(candidate, dataType, format, pattern) {
   }
 
   if ('max' in dataType && candidate.length > dataType.max) {
-    return new errorTypes.StringTooLongError(candidate, dataTypea.max);
+    return new errorTypes.StringTooLongError(candidate, dataType.max);
   }
   if ('min' in dataType && value.length < dataType.min) {
-    return new errorTypes.StringTooShortError(candidate, dataTypea.min);
+    return new errorTypes.StringTooShortError(candidate, dataType.min);
   }
 
   if ( format === 'date-time') {

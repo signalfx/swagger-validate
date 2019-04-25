@@ -119,7 +119,7 @@ function validateModel(candidate, model, models, options) {
 
 
   if (errors.length) {
-    throw new ValidationErrors(candidate, model.id, model, errors);
+    return new ValidationErrors(candidate, model.id, model, errors);
   }
 }
 module.exports = validateModel;
