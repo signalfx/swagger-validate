@@ -39,16 +39,22 @@ function validateArray(candidate, dataType, models) {
     }
   }
 
-  let errors;
+  const errors =[];
 
   if (items.$ref) {
     const model = models[items.$ref];
-    errors = candidate.filter(function(value) {
-      return validate.model(value, model, models);
+    candidate.map(function(value) {
+      const err=validate.model(value, model, models);
+      if (err) {
+        errors.push(err);
+      }
     });
   } else {
-    errors = candidate.filter(function(value) {
-      return validate.dataType(value, items, models);
+    candidate.map(function(value) {
+      const err= validate.dataType(value, items, models);
+      if (err) {
+        errors.push(err);
+      }
     });
   }
 

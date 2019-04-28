@@ -4,6 +4,18 @@
  * DataTypeValidationError
  * @param {*} message - message
  */
+function IsNullError(message) {
+  this.name = 'IsNullError';
+  this.message = message || 'Could not to be null';
+}
+IsNullError.prototype = Object.create(Error.prototype);
+IsNullError.prototype.constructor = IsNullError;
+exports.IsNullError = IsNullError;
+
+/**
+ * DataTypeValidationError
+ * @param {*} message - message
+ */
 function DataTypeValidationError(message) {
   this.name = 'DataTypeValidationError';
   this.message = message || 'Invalid data type';

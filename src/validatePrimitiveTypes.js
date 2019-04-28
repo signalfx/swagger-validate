@@ -13,6 +13,7 @@ const errorTypes = require('./errorTypes');
 function validateInteger(candidate, dataType, format) {
   let error = validateNumber(candidate, dataType);
   if (error) return error;
+  if (candidate == null) return;
   if (!format) {
     error = validateNumber(candidate, dataType);
   } else if (format === 'int32') {
@@ -42,6 +43,9 @@ exports.validateInteger = validateInteger;
  * @return {Error}
  */
 function validateNumber(candidate, dataType) {
+  const error = validateNull(candidate, dataType);
+  if (error) return error;
+  if (candidate == null) return;
   if (!(typeof candidate === 'number' || candidate instanceof Number) || isNaN(candidate)) {
     return new errorTypes.NotANumberError(candidate, typeof candidate);
   }
@@ -63,6 +67,9 @@ exports.validateNumber = validateNumber;
  * @return {Error}
  */
 function validateBoolean(candidate) {
+  const error = validateNull(candidate, dataType);
+  if (error) return error;
+  if (candidate == null) return;
   if (!(typeof candidate === 'boolean' || candidate instanceof Boolean)) {
     return new errorTypes.NotABooleanError(candidate, typeof candidate);
   }
@@ -99,6 +106,10 @@ exports.validateFile = validateFile;
  * @return {Error}
  */
 function validateString(candidate, dataType, format, pattern) {
+  const error = validateNull(candidate, dataType);
+  if (error) return error;
+  if (candidate == null) return;
+
   if (typeof candidate !== 'string' && !(candidate instanceof String)) {
     return new errorTypes.NotAStringError(candidate, typeof candidate);
   }
@@ -108,7 +119,6 @@ function validateString(candidate, dataType, format, pattern) {
       return new errorTypes.StringNotInEnumError(candidate, dataType.enum);
     }
   }
-
   if (!candidate) {
     if ('allowEmpty' in dataType && dataType.allowEmpty) return;
     return new errorTypes.StringNotEmptyError(candidate, typeof candidate);
@@ -117,8 +127,12 @@ function validateString(candidate, dataType, format, pattern) {
   if ('max' in dataType && candidate.length > dataType.max) {
     return new errorTypes.StringTooLongError(candidate, dataType.max);
   }
-  if ('min' in dataType && value.length < dataType.min) {
+  if ('min' in dataType && candidate.length < dataType.min) {
     return new errorTypes.StringTooShortError(candidate, dataType.min);
+  }
+
+  if ('trim' in dataType && dataType.trim) {
+    candidate = candidate.trim();
   }
 
   if ( format === 'date-time') {
@@ -139,6 +153,19 @@ function validateString(candidate, dataType, format, pattern) {
     if ( !regExp.test(candidate) ) {
       return new errorTypes.StringFormatNotValidError(candidate, pattern);
     }
+  }
+}
+
+/**
+ * chack if candidate is null
+ * dataType['nullable'] is default to be false
+ * @param candidate -
+ * @param dataType -
+ */
+function validateNull(candidate, dataType) {
+  if (candidate === null) {
+    if ('nullable' in dataType && dataType['nullable']) return;
+    return new errorTypes.IsNullError();
   }
 }
 exports.validateString = validateString;

@@ -89,16 +89,14 @@ function validateModel(candidate, model, models, options) {
 
 
   // set default value
-  if (model.type=='object') {
-    Object.keys(model.properties).forEach(function(propertyName) {
-      const property = model.properties[propertyName];
-      if (property.default != undefined) {
-        if (candidate[propertyName] == undefined) {
-          candidate[propertyName]=property.default;
-        }
+  Object.keys(model.properties).forEach(function(propertyName) {
+    const property = model.properties[propertyName];
+    if (property.default != undefined) {
+      if (candidate[propertyName] == undefined || candidate[propertyName] == null ) {
+        candidate[propertyName]=property.default;
       }
-    });
-  }
+    }
+  });
 
 
   Object.keys(candidate).forEach(function(propertyName) {
