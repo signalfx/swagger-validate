@@ -103,11 +103,11 @@ function validateModel(candidate, model, models, options) {
       }
     }
     // convert to type
-    if(property['type']) {
+    if (property['type']) {
       try {
         let same = (typeof candidate[propertyName] === property['type']);
         if (!same) {
-          same = (property['type'] == 'array' && Array.isArray(candidate[propertyName]))
+          same = (property['type'] == 'array' && Array.isArray(candidate[propertyName]));
         }
         if (!same) {
           let convertValue = candidate[propertyName].toString().trim();
@@ -136,7 +136,7 @@ function validateModel(candidate, model, models, options) {
           candidate[propertyName] = convertValue;
         }
       } catch (e) {
-        errors.push(new ValidationError(propertyName, propertyName, e))
+        errors.push(new ValidationError(propertyName, propertyName, e));
       }
     }
   });
@@ -145,7 +145,7 @@ function validateModel(candidate, model, models, options) {
   Object.keys(candidate).forEach(function(propertyName) {
     const property = model.properties[propertyName];
 
-    if (property === undefined) {
+    if (!property) {
       if ( options.checkUnexpectedValues ) {
         errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError()));
       }
