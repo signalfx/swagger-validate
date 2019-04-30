@@ -96,6 +96,11 @@ function validateModel(candidate, model, models, options) {
         candidate[propertyName]=property.default;
       }
     }
+    if (property['trim']) {
+      if (candidate[propertyName] && typeof candidate[propertyName] ==='string' ) {
+        candidate[propertyName]=candidate[propertyName].trim();
+      }
+    }
   });
 
 

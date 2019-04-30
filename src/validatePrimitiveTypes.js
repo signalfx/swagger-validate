@@ -131,10 +131,6 @@ function validateString(candidate, dataType, format, pattern) {
     return new errorTypes.StringTooShortError(candidate, dataType.min);
   }
 
-  if ('trim' in dataType && dataType.trim) {
-    candidate = candidate.trim();
-  }
-
   if ( format === 'date-time') {
     if (!moment(candidate, moment.ISO_8601, true).isValid()) {
       return new errorTypes.NotADateValueError(candidate, typeof candidate);
