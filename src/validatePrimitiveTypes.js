@@ -3,6 +3,12 @@
 const moment = require('moment');
 const errorTypes = require('./errorTypes');
 
+const EMAIL_RE = /^[a-z0-9\!\#\$\%\&\'\*\+\/\=\?\^\_\`\{\|\}\~\-]+(?:\.[a-z0-9\!\#\$\%\&\'\*\+\/\=\?\^\_\`\{\|\}\~\-]+)*@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?$/i;
+const PASSWORD_RE = /^[\w\`\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\}\|\;\:\'\"\,\<\.\>\/\?]+$/;
+// https://gist.github.com/dperini/729294
+const URL_RE = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
+
+
 /**
  * validateInteger
  * @param {int} candidate - value
@@ -102,7 +108,7 @@ exports.validateFile = validateFile;
  * @param {string} candidate - value
  * @param {object} dataType - model
  * @param {string} format - format
- * @param {string} pattern - pattern
+ * @param {string | RegExp } pattern - pattern
  * @return {Error}
  */
 function validateString(candidate, dataType, format, pattern) {
@@ -144,19 +150,34 @@ function validateString(candidate, dataType, format, pattern) {
     }
   }
 
+  if (format) {
+    switch (format) {
+      case 'url':
+        pattern = URL_RE;
+        break;
+      case 'email':
+        pattern = EMAIL_RE;
+        break;
+      case 'password':
+        pattern= PASSWORD_RE;
+        break;
+    }
+  }
+
   if ( pattern ) {
     const regExp = new RegExp(pattern);
     if ( !regExp.test(candidate) ) {
-      return new errorTypes.StringFormatNotValidError(candidate, pattern);
+      return new errorTypes.StringFormatNotValidError(candidate, format? format : pattern);
     }
   }
 }
 
 /**
- * chack if candidate is null
- * dataType['nullable'] is default to be false
- * @param candidate -
- * @param dataType -
+ * validateNull
+ * chack if candidate is null dataType['nullable'] is default to be false
+ * @param candidate - value
+ * @param dataType - datatype
+ * @return
  */
 function validateNull(candidate, dataType) {
   if (candidate === null) {

@@ -2,6 +2,7 @@
 'use strict';
 
 const errorTypes = require('./errorTypes');
+const ConvertError = errorTypes.ConvertError;
 const ValidationError = errorTypes.ValidationError;
 const ValidationErrors = errorTypes.ValidationErrors;
 const MissingValueError = errorTypes.MissingValueError;
@@ -99,6 +100,43 @@ function validateModel(candidate, model, models, options) {
     if (property['trim']) {
       if (candidate[propertyName] && typeof candidate[propertyName] ==='string' ) {
         candidate[propertyName]=candidate[propertyName].trim();
+      }
+    }
+    // convert to type
+    if(property['type']) {
+      try {
+        let same = (typeof candidate[propertyName] === property['type']);
+        if (!same) {
+          same = (property['type'] == 'array' && Array.isArray(candidate[propertyName]))
+        }
+        if (!same) {
+          let convertValue = candidate[propertyName].toString().trim();
+          switch (property['type']) {
+            case 'integer':
+              const value = parseInt(convertValue);
+              if (convertValue !== value.toString()) {
+                convertValue = null;
+              } else {
+                convertValue = value;
+              }
+              break;
+            case 'number':
+              convertValue = Number(convertValue);
+              break;
+            case 'boolean':
+              convertValue = (convertValue === 'true');
+              break;
+            default:
+              convertValue = candidate[propertyName];
+              break;
+          }
+          if (!convertValue) {
+            throw new ConvertError(candidate[propertyName], property['type']);
+          }
+          candidate[propertyName] = convertValue;
+        }
+      } catch (e) {
+        errors.push(new ValidationError(propertyName, propertyName, e))
       }
     }
   });
