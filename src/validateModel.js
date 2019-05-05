@@ -103,7 +103,7 @@ function validateModel(candidate, model, models, options) {
       }
     }
     // convert to type
-    if (property['type']) {
+    if (property['convertType'] && property['convertType'] === property['type']) {
       try {
         let same = (typeof candidate[propertyName] === property['type']);
         if (!same) {

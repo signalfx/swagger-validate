@@ -19,18 +19,16 @@ const URL_RE = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\
 function validateInteger(candidate, dataType, format) {
   let error = validateNumber(candidate, dataType);
   if (error) return error;
-  if (candidate == null) return;
-  if (!format) {
-    error = validateNumber(candidate, dataType);
-  } else if (format === 'int32') {
+  if (candidate === null) return null;
+  if (format === 'int32') {
     const int32Max = Math.pow(2, 31) - 1;
     const int32Value = parseInt(candidate);
-    if (isNaN(int32Value) || !isFinite(candidate) || int32Value < -(int32Max + 1) || int32Value > int32Max) {
+    if (isNaN(int32Value) || !isFinite(candidate) || int32Value < -(int32Max + 1) || int32Value > int32Max || candidate.toString()!==int32Value.toString()) {
       error = new errorTypes.NotANumberError(candidate, typeof candidate);
     }
   } else if (format === 'int64') {
     const int64Value = parseInt(candidate);
-    if (isNaN(int64Value) || !isFinite(candidate)) {
+    if (isNaN(int64Value) || !isFinite(candidate) || candidate.toString()!==int64Value.toString()) {
       error = new errorTypes.NotANumberError(candidate, typeof candidate);
     }
   }
@@ -72,7 +70,7 @@ exports.validateNumber = validateNumber;
  * @param {boolean} candidate - value
  * @return {Error}
  */
-function validateBoolean(candidate) {
+function validateBoolean(candidate, dataType) {
   const error = validateNull(candidate, dataType);
   if (error) return error;
   if (candidate == null) return;
@@ -175,8 +173,8 @@ function validateString(candidate, dataType, format, pattern) {
 /**
  * validateNull
  * chack if candidate is null dataType['nullable'] is default to be false
- * @param candidate - value
- * @param dataType - datatype
+ * @param {*} candidate - value
+ * @param {*} dataType - datatype
  * @return
  */
 function validateNull(candidate, dataType) {
