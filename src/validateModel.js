@@ -104,39 +104,41 @@ function validateModel(candidate, model, models, options) {
     }
     // convert to type
     if (property['convertType'] && property['convertType'] === property['type']) {
-      try {
-        let same = (typeof candidate[propertyName] === property['type']);
-        if (!same) {
-          same = (property['type'] == 'array' && Array.isArray(candidate[propertyName]));
-        }
-        if (!same) {
-          let convertValue = candidate[propertyName].toString().trim();
-          switch (property['type']) {
-            case 'integer':
-              const value = parseInt(convertValue);
-              if (convertValue !== value.toString()) {
-                convertValue = null;
-              } else {
-                convertValue = value;
-              }
-              break;
-            case 'number':
-              convertValue = Number(convertValue);
-              break;
-            case 'boolean':
-              convertValue = (convertValue === 'true');
-              break;
-            default:
-              convertValue = candidate[propertyName];
-              break;
+      if (candidate[propertyName] !== null && candidate[propertyName] !== undefined) {
+        try {
+          let same = (typeof candidate[propertyName] === property['type']);
+          if (!same) {
+            same = (property['type'] == 'array' && Array.isArray(candidate[propertyName]));
           }
-          if (!convertValue) {
-            throw new ConvertError(candidate[propertyName], property['type']);
+          if (!same) {
+            let convertValue = candidate[propertyName].toString().trim();
+            switch (property['type']) {
+              case 'integer':
+                const value = parseInt(convertValue);
+                if (convertValue !== value.toString()) {
+                  convertValue = null;
+                } else {
+                  convertValue = value;
+                }
+                break;
+              case 'number':
+                convertValue = Number(convertValue);
+                break;
+              case 'boolean':
+                convertValue = (convertValue === 'true');
+                break;
+              default:
+                convertValue = candidate[propertyName];
+                break;
+            }
+            if (convertValue === null) {
+              throw new ConvertError(candidate[propertyName], property['type']);
+            }
+            candidate[propertyName] = convertValue;
           }
-          candidate[propertyName] = convertValue;
+        } catch (e) {
+          errors.push(new ValidationError(propertyName, propertyName, e));
         }
-      } catch (e) {
-        errors.push(new ValidationError(propertyName, propertyName, e));
       }
     }
   });
@@ -149,6 +151,10 @@ function validateModel(candidate, model, models, options) {
       if ( options.checkUnexpectedValues ) {
         errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError()));
       }
+      return;
+    }
+
+    if (candidate[propertyName]===null && property.nullable===true) {
       return;
     }
 
