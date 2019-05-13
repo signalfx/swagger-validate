@@ -155,7 +155,7 @@ exports.NotVoidError = NotVoidError;
  */
 function ConvertError(value, type) {
   this.name = 'ConvertError';
-  this.message = value + ' can not conver to '+type;
+  this.message = `${value} is not type of ${type}`;
   this.value = value;
 }
 ConvertError.prototype = Object.create(DataTypeValidationError.prototype);
@@ -320,7 +320,7 @@ function ValidationError(specName, spec, error) {
   this.spec = spec;
   this.error = error;
 
-  this.message = specName + ' is invalid: ' + error.message;
+  this.message = error.message;
 }
 ValidationError.prototype = Object.create(DataTypeValidationError.prototype);
 ValidationError.prototype.constructor = ValidationError;

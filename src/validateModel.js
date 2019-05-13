@@ -67,6 +67,8 @@ function addInhertiedProperties(model, modelId, models) {
  * @return {void} threw ValidationErrors if validate fail
  */
 function validateModel(candidate, model, models, options) {
+  let hasConvertError = false;
+
   if (candidate === null || typeof candidate !== 'object') {
     return new ValidationErrors(candidate, model);
   }
@@ -132,6 +134,7 @@ function validateModel(candidate, model, models, options) {
                 break;
             }
             if (convertValue === null) {
+              hasConvertError = true;
               throw new ConvertError(candidate[propertyName], property['type']);
             }
             candidate[propertyName] = convertValue;
@@ -158,9 +161,11 @@ function validateModel(candidate, model, models, options) {
       return;
     }
 
-    const error = validate.dataType(candidate[propertyName], property, models);
-    if (error) {
-      errors.push(new ValidationError(propertyName, property, error));
+    if (!hasConvertError) {
+      const error = validate.dataType(candidate[propertyName], property, models);
+      if (error) {
+        errors.push(new ValidationError(propertyName, property, error));
+      }
     }
   });
 
