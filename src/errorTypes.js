@@ -114,6 +114,29 @@ NotAnArrayError.prototype = Object.create(DataTypeValidationError.prototype);
 NotAnArrayError.prototype.constructor = NotAnArrayError;
 exports.NotAnArrayError = NotAnArrayError;
 
+/**
+ * ArrayLengthTooLongError
+ * @param {*} maxLength - max length of array
+ */
+function ArrayLengthTooLongError(maxLength) {
+  this.name = 'ArrayLengthTooLongError';
+  this.message = `array length is bigger than ${maxLength}`;
+}
+ArrayLengthTooLongError.prototype = Object.create(DataTypeValidationError.prototype);
+ArrayLengthTooLongError.prototype.constructor = ArrayLengthTooLongError;
+exports.ArrayLengthTooLongError = ArrayLengthTooLongError;
+
+/**
+ * ArrayLengthTooShortError
+ * @param {*} minLength - min length of array
+ */
+function ArrayLengthTooShortError(minLength) {
+  this.name = 'ArrayLengthTooShortError';
+  this.message = `array length is smaller than ${minLength}`;
+}
+ArrayLengthTooShortError.prototype = Object.create(DataTypeValidationError.prototype);
+ArrayLengthTooShortError.prototype.constructor = ArrayLengthTooShortError;
+exports.ArrayLengthTooShortError = ArrayLengthTooShortError;
 
 /**
  * DuplicateInSetError

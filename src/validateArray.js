@@ -15,6 +15,13 @@ function validateArray(candidate, dataType, models) {
     return new errorTypes.NotAnArrayError(candidate, typeof candidate);
   }
 
+  if ('maxLength' in dataType && candidate.length > dataType.maxLength) {
+    return new errorTypes.ArrayLengthTooLongError(dataType.maxLength);
+  }
+  if ('minLength' in dataType && candidate.length < dataType.minLength) {
+    return new errorTypes.ArrayLengthTooShortError(dataType.minLength);
+  }
+
   const items = dataType.items;
 
   if (dataType.uniqueItems) {
@@ -62,4 +69,5 @@ function validateArray(candidate, dataType, models) {
     return new errorTypes.ErrorsInArrayElementsError(errors);
   }
 }
+
 module.exports = validateArray;
