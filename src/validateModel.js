@@ -127,7 +127,14 @@ function validateModel(candidate, model, models, options) {
                 convertValue = Number(convertValue);
                 break;
               case 'boolean':
-                convertValue = (convertValue === 'true');
+                if (convertValue === 'true') {
+                  convertValue = true;
+                } else if (convertValue === 'false') {
+                  convertValue = false;
+                } else {
+                  hasConvertError = true;
+                  throw new ConvertError(candidate[propertyName], property['type']);
+                }
                 break;
               default:
                 convertValue = candidate[propertyName];
