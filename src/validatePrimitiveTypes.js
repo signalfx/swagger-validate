@@ -137,13 +137,13 @@ function validateString(candidate, dataType, format, pattern) {
 
   if ( format === 'date-time') {
     if (!moment(candidate, moment.ISO_8601, true).isValid()) {
-      return new errorTypes.NotADateValueError(candidate, typeof candidate);
+      return new errorTypes.DateFormatError(candidate, typeof candidate);
     }
   } else if (format === 'date') {
     const date = new Date(candidate);
     if (date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
       if ( candidate.length !== 10) {
-        return new errorTypes.NotADateValueError(candidate, typeof candidate);
+        return new errorTypes.InValidDateValueError(candidate, typeof candidate);
       }
     }
   }

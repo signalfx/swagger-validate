@@ -279,20 +279,32 @@ StringFormatNotValidError.prototype.constructor = StringFormatNotValidError;
 exports.StringFormatNotValidError = StringFormatNotValidError;
 
 /**
- * NotADateValueError
+ * InValidDateValueError
  * @param {*} value - value
  * @param {*} actualType - actual type
  */
-function NotADateValueError(value, actualType) {
-  this.name = 'NotADateValueError';
-  this.message = value + ' is not a date value';
-  if (actualType) this.message += ' (got a ' + actualType + ' instead)';
-
+function InValidDateValueError(value, actualType) {
+  this.name = 'InValidDateValueError';
+  this.message = value + ' is not a valid date value';
   this.value = value;
 }
-NotADateValueError.prototype = Object.create(DataTypeValidationError.prototype);
-NotADateValueError.prototype.constructor = NotADateValueError;
-exports.NotADateValueError = NotADateValueError;
+InValidDateValueError.prototype = Object.create(InValidDateValueError.prototype);
+InValidDateValueError.prototype.constructor = InValidDateValueError;
+exports.InValidDateValueError = InValidDateValueError;
+
+/**
+ * DateFormatError
+ * @param {*} value - value
+ * @param {*} actualType - actual type
+ */
+function DateFormatError(value, actualType) {
+  this.name = 'DateFormatError';
+  this.message = value + ' is not a valid ISO_8601 format date';
+  this.value = value;
+}
+DateFormatError.prototype = Object.create(DateFormatError.prototype);
+DateFormatError.prototype.constructor = DateFormatError;
+exports.DateFormatError = DateFormatError;
 
 /**
  * ErrorsInArrayElementsError
