@@ -139,6 +139,10 @@ function validateString(candidate, dataType, format, pattern) {
     if (!moment(candidate, moment.ISO_8601, true).isValid()) {
       return new errorTypes.DateFormatError(candidate, typeof candidate);
     }
+    // 过滤调以空格分隔日期时间的ISO8601格式
+    if (candidate.indexOf(' ') >= 0) {
+      return new errorTypes.DateFormatError(candidate, typeof candidate);
+    }
   } else if (format === 'date') {
     const date = new Date(candidate);
     if (date !== 'Invalid Date' && !isNaN(date) && isNaN(candidate)) {
