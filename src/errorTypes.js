@@ -279,6 +279,20 @@ StringFormatNotValidError.prototype.constructor = StringFormatNotValidError;
 exports.StringFormatNotValidError = StringFormatNotValidError;
 
 /**
+ * RegExpValidateError
+ * @param {*} value - value
+ * @param {*} pattern - pattern
+ */
+function RegExpValidateError(value, pattern) {
+  this.name = 'RegExpValidateError';
+  this.message = `${value}  is not a valid ${pattern} value`;
+  this.value = value;
+}
+RegExpValidateError.prototype = Object.create(RegExpValidateError.prototype);
+RegExpValidateError.prototype.constructor = RegExpValidateError;
+exports.RegExpValidateError = RegExpValidateError;
+
+/**
  * InValidDateValueError
  * @param {*} value - value
  * @param {*} actualType - actual type
