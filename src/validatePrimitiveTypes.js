@@ -53,11 +53,11 @@ function validateNumber(candidate, dataType) {
     return new errorTypes.NotANumberError(candidate, typeof candidate);
   }
 
-  if ((dataType.minimum !== undefined) && candidate < parseInt(dataType.minimum, 10)) {
+  if ((dataType.minimum !== undefined) && candidate <parseFloat(dataType.minimum)) {
     return new errorTypes.NumberTooSmallError(candidate, dataType.minimum);
   }
 
-  if ((dataType.maximum !== undefined) && candidate > parseInt(dataType.maximum, 10)) {
+  if ((dataType.maximum !== undefined) && candidate > parseFloat(dataType.maximum)) {
     return new errorTypes.NumberTooLargeError(candidate, dataType.maximum);
   }
 }
