@@ -86,7 +86,7 @@ function validateModel(candidate, model, models, options) {
     if (candidate[propertyName] !== undefined) return;
 
     const property = model.properties[propertyName];
-    const error = new MissingValueError();
+    const error = new MissingValueError(propertyName);
     errors.push(new ValidationError(propertyName, property, error));
   });
 
@@ -159,7 +159,7 @@ function validateModel(candidate, model, models, options) {
 
     if (!property) {
       if ( options.checkUnexpectedValues ) {
-        errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError()));
+        errors.push(new ValidationError(propertyName, propertyName, new UnexpectedValueError(propertyName)));
       }
       return;
     }

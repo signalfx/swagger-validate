@@ -336,10 +336,10 @@ exports.ErrorsInArrayElementsError = ErrorsInArrayElementsError;
 /**
  * MissingValueError
  */
-function MissingValueError() {
+function MissingValueError(specName) {
   this.name = 'MissingValueError';
-
-  this.message = 'This value is required but missing';
+  this.specName = specName;
+  this.message = specName +' is required but missing';
 }
 MissingValueError.prototype = Object.create(DataTypeValidationError.prototype);
 MissingValueError.prototype.constructor = MissingValueError;
@@ -348,10 +348,10 @@ exports.MissingValueError = MissingValueError;
 /**
  * UnexpectedValueError
  */
-function UnexpectedValueError() {
+function UnexpectedValueError(specName) {
   this.name = 'UnexpectedValueError';
-
-  this.message = 'This value is unexpected';
+  this.specName =  specName;
+  this.message = specName +' is unexpected';
 }
 UnexpectedValueError.prototype = Object.create(DataTypeValidationError.prototype);
 UnexpectedValueError.prototype.constructor = UnexpectedValueError;

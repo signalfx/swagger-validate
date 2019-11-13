@@ -20,7 +20,7 @@ function validateOperation(candidate, operation, models) {
     if (candidate[param.name] !== undefined) return true;
 
     if (param.required) {
-      const error = new MissingValueError();
+      const error = new MissingValueError(propertyName);
       errors.push(new ValidationError(param.name, param, error));
     }
 
