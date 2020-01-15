@@ -23,12 +23,12 @@ function validateInteger(candidate, dataType, format) {
     const int32Max = Math.pow(2, 31) - 1;
     const int32Value = parseInt(candidate);
     if (isNaN(int32Value) || !isFinite(candidate) || int32Value < -(int32Max + 1) || int32Value > int32Max || candidate.toString()!==int32Value.toString()) {
-      error = new errorTypes.NotANumberError(candidate, typeof candidate);
+      error = new errorTypes.NumberFormatError(candidate, format);
     }
   } else if (format === 'int64') {
     const int64Value = parseInt(candidate);
     if (isNaN(int64Value) || !isFinite(candidate) || candidate.toString()!==int64Value.toString()) {
-      error = new errorTypes.NotANumberError(candidate, typeof candidate);
+      error = new errorTypes.NumberFormatError(candidate, format);
     }
   }
 

@@ -55,6 +55,20 @@ exports.NotANumberError = NotANumberError;
 
 
 /**
+ * NumberFormatError
+ * @param {*} value - value
+ * @param {*} format
+ */
+function NumberFormatError(value, format) {
+  this.name = 'NumberFormatError';
+  this.message = value + ' is not a validate format of ' + format;
+  this.value = value;
+}
+NumberFormatError.prototype = Object.create(DataTypeValidationError.prototype);
+NumberFormatError.prototype.constructor = NumberFormatError;
+exports.NumberFormatError = NumberFormatError;
+
+/**
  * NumberTooLargeError
  * @param {*} value - value
  * @param {*} max - max value
@@ -350,7 +364,7 @@ exports.MissingValueError = MissingValueError;
  */
 function UnexpectedValueError(specName) {
   this.name = 'UnexpectedValueError';
-  this.specName =  specName;
+  this.specName = specName;
   this.message = specName +' is unexpected';
 }
 UnexpectedValueError.prototype = Object.create(DataTypeValidationError.prototype);
