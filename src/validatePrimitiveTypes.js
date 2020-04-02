@@ -144,10 +144,10 @@ function validateString(candidate, dataType, format, pattern) {
     }
   } else if (format === 'date') {
     const date = new Date(candidate);
-    if (isNaN(date) || date.toString() === 'Invalid Date') {
+    if (date.toString() === 'Invalid Date') {
       return new errorTypes.InValidDateValueError(candidate, typeof candidate);
     }
-    if (isNaN(candidate) || candidate.length !== 10) {
+    if (candidate.length !== 10) {
       return new errorTypes.InValidDateValueError(candidate, typeof candidate);
     }
   }
