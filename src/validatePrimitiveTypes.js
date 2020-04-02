@@ -148,8 +148,7 @@ function validateString(candidate, dataType, format, pattern) {
       return new errorTypes.InValidDateValueError(candidate, typeof candidate);
     }
     if (isNaN(candidate) || candidate.length !== 10) {
-        return new errorTypes.InValidDateValueError(candidate, typeof candidate);
-      }
+      return new errorTypes.InValidDateValueError(candidate, typeof candidate);
     }
   }
 
