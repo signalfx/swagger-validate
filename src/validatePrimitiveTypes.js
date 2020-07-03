@@ -219,7 +219,10 @@ function validateString(candidate, dataType, format, pattern) {
         pattern= PASSWORD_RE;
         break;
       case 'CNIdentityCard':
-        return isCNIdentityCard(candidate);
+        if (!isCNIdentityCard(candidate)) {
+          return new errorTypes.RegExpValidateError(candidate, format? format : pattern);
+        }
+        break;
     }
   }
 
