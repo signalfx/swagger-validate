@@ -108,7 +108,7 @@ exports.validateFile = validateFile;
  * @return {bool}
  */
 function isCNIdentityCard(idcode) {
-  if ( typeof value != 'string' || value.length != 18 ) {
+  if ( typeof idcode != 'string' || idcode.length != 18 ) {
     return false;
   }
   // 加权因子
