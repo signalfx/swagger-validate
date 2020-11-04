@@ -50,5 +50,8 @@
   "bugs": {
     "url": "https://github.com/DG-Wangtao/swagger-validate/issues"
   },
-  "homepage": "https://github.com/DG-Wangtao/swagger-validate"
+  "homepage": "https://github.com/DG-Wangtao/swagger-validate",
+  "publishConfig": {
+    "registry": "http://package.nemoface.com/repository/npm-private"
+  }
 }
