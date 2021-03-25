@@ -16,8 +16,7 @@
     "eslint-config-google": "^0.12.0",
     "gulp": "^4.0.1",
     "jasmine": "^3.4.0",
-    "jshint": "^2.10.2",
-    "moment": "^2.20.1"
+    "jshint": "^2.10.2"
   },
   "directories": {
     "jsSrc": "./src",
@@ -53,5 +52,8 @@
   "homepage": "https://github.com/DG-Wangtao/swagger-validate",
   "publishConfig": {
     "registry": "http://package.nemoface.com/repository/npm-private"
+  },
+  "dependencies": {
+    "luxon": "^1.26.0"
   }
 }

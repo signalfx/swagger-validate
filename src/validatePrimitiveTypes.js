@@ -1,6 +1,5 @@
 'use strict';
-
-const moment = require('moment');
+const {DateTime} = require('luxon');
 const errorTypes = require('./errorTypes');
 
 const EMAIL_RE = '[\\w!#$%&\'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&\'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?';
@@ -8,6 +7,7 @@ const EMAIL_RE = '[\\w!#$%&\'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&\'*+/=?^_`{|}~-]+)*@(
 const PASSWORD_RE = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$';
 const URL_RE = '(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?';
 const MOBILE_RE = '^((\\+86)|(86))?[1][3456789][0-9]{9}$';
+const ISO_8601_FULL = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(([+-]\d{2}(:\d{2})?)|Z)$/;
 
 /**
  * validateInteger
@@ -191,7 +191,11 @@ function validateString(candidate, dataType, format, pattern) {
   }
 
   if ( format === 'date-time') {
-    if (!moment(candidate, moment.ISO_8601, true).isValid()) {
+    const regExp = new RegExp(ISO_8601_FULL);
+    if ( !regExp.test(candidate) ) {
+      return new errorTypes.DateFormatError(candidate, typeof candidate);
+    }
+    if (!DateTime.fromISO(candidate).isValid) {
       return new errorTypes.DateFormatError(candidate, typeof candidate);
     }
     // 过滤调以空格分隔日期时间的ISO8601格式
