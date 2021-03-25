@@ -7,6 +7,7 @@ const EMAIL_RE = '[\\w!#$%&\'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&\'*+/=?^_`{|}~-]+)*@(
 // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
 const PASSWORD_RE = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$';
 const URL_RE = '(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?';
+const MOBILE_RE = '^((\\+86)|(86))?[1][3456789][0-9]{9}$';
 
 /**
  * validateInteger
@@ -222,6 +223,9 @@ function validateString(candidate, dataType, format, pattern) {
         if (!isCNIdentityCard(candidate)) {
           return new errorTypes.RegExpValidateError(candidate, format? format : pattern);
         }
+        break;
+      case 'mobile':
+        pattern = MOBILE_RE;
         break;
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "swagger-validate-feat",
-  "version": "0.2.18",
+  "version": "0.2.20",
   "description": "Detailed validation of objects against a given swagger spec",
   "keywords": [
     "swagger",
