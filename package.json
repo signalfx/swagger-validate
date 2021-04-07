@@ -1,6 +1,6 @@
 {
   "name": "swagger-validate-feat",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "description": "Detailed validation of objects against a given swagger spec",
   "keywords": [
     "swagger",
@@ -55,5 +55,8 @@
   },
   "dependencies": {
     "luxon": "^1.26.0"
+  },
+  "publishConfig": {
+    "registry": "http://package.nemoface.com/repository/npm-private"
   }
 }
