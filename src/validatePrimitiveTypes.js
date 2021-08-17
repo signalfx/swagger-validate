@@ -7,6 +7,7 @@ const EMAIL_RE = '[\\w!#$%&\'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&\'*+/=?^_`{|}~-]+)*@(
 const PASSWORD_RE = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$';
 const URL_RE = '(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?';
 const MOBILE_RE = '^((\\+86)|(86))?[1][3456789][0-9]{9}$';
+const TEL_RE = '(^0\\d{2,3}-\\d{7,8}(-\\d{1,6})?$)|(^((\\+86)|(86))?[1][3456789][0-9]{9}$)'; 
 const ISO_8601_FULL = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(([+-]\d{2}(:\d{2})?)|Z)$/;
 
 /**
@@ -230,6 +231,9 @@ function validateString(candidate, dataType, format, pattern) {
         break;
       case 'mobile':
         pattern = MOBILE_RE;
+        break;
+      case 'tel':
+        pattern = TEL_RE;
         break;
     }
   }
